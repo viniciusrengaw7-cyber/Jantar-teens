@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TEENS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFBE0;
+  --bg2:#FFF4B8;
+  --orange:#E8590C;
+  --orange-deep:#BF4505;
+  --orange-soft:#FFD9B3;
+  --line:#F5E48A;
+}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{
+  background:var(--bg);
+  color:var(--orange-deep);
+  font-family:"Anton","Impact","Arial Narrow",sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  line-height:1.2;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+button,input,textarea{font:inherit;text-transform:uppercase;letter-spacing:.04em;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+
+.wrap{max-width:640px;margin:0 auto;padding:20px 20px 48px;min-height:100vh;display:flex;flex-direction:column}
+
+/* LOGO */
+.logo{display:flex;justify-content:center;gap:.02em;line-height:.9;user-select:none}
+.logo span{
+  display:inline-block;color:var(--orange);
+  font-size:clamp(88px,30vw,190px);
+  transition:transform .35s cubic-bezier(.3,1.6,.5,1);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.logo span.pop{transform:translateY(-14px) rotate(var(--r,-6deg)) scale(1.06)}
+.logo.small{justify-content:flex-start}
+.logo.small span{font-size:34px;cursor:default}
+
+.intro{text-align:center;margin-top:8px}
+.intro h2{font-size:clamp(26px,7vw,40px);font-weight:400}
+.intro p{margin:14px auto 28px;max-width:34ch;font-size:19px;color:var(--orange-deep);opacity:.9}
+
+.btn{
+  background:var(--orange);color:#fff;border:0;border-radius:999px;
+  padding:16px 34px;font-size:22px;cursor:pointer;
+  box-shadow:0 5px 0 var(--orange-deep);
+  transition:transform .12s,box-shadow .12s;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--orange-deep)}
+.btn.ghost{background:transparent;color:var(--orange-deep);box-shadow:none;border:2px solid var(--orange-soft);padding:14px 26px}
+.btn[disabled]{opacity:.55;cursor:wait}
+
+/* STEPS */
+#flow{display:none;flex:1;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.bar{height:10px;background:var(--bg2);border-radius:99px;overflow:hidden;border:2px solid var(--line);margin-bottom:34px}
+.bar i{display:block;height:100%;width:0;background:var(--orange);border-radius:99px;transition:width .5s cubic-bezier(.3,1.2,.5,1)}
+.count{font-size:18px;opacity:.85}
+
+.step{display:none;flex:1;animation:in .35s ease both}
+.step.on{display:block}
+@keyframes in{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.step h3{font-size:clamp(34px,10vw,54px);font-weight:400;color:var(--orange);line-height:1.05;margin-bottom:8px}
+.hint{font-size:18px;margin-bottom:24px;opacity:.85}
+
+.field{
+  width:100%;background:#fff;border:3px solid var(--line);border-radius:18px;
+  padding:16px 18px;font-size:26px;color:var(--orange-deep);
+  transition:border-color .15s;
+}
+.field::placeholder{color:#E3B98C}
+.field:focus{outline:none;border-color:var(--orange)}
+.field.bad{border-color:#D6281C;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+textarea.field{min-height:170px;resize:vertical;line-height:1.3}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  background:#fff;border:3px solid var(--line);border-radius:999px;
+  padding:12px 22px;font-size:22px;cursor:pointer;color:var(--orange-deep);
+  transition:transform .15s,background .15s,border-color .15s;
+}
+.chip:hover{border-color:var(--orange)}
+.chip[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#fff;transform:scale(1.05)}
+
+/* FILHOS */
+.kids{display:grid;gap:12px;margin-bottom:14px}
+.kid{display:grid;grid-template-columns:1fr 92px 44px;gap:10px;align-items:center;animation:in .3s ease both}
+.kid .field{font-size:22px;padding:13px 14px}
+.kid .rm{
+  width:44px;height:44px;border-radius:50%;border:2px solid var(--orange-soft);background:transparent;
+  color:var(--orange-deep);font-size:22px;cursor:pointer;
+}
+.kid .rm:hover{background:var(--orange-soft)}
+.kidhead{display:grid;grid-template-columns:1fr 92px 44px;gap:10px;font-size:15px;margin-bottom:8px;opacity:.8}
+
+.dreamtools{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:16px;gap:10px;flex-wrap:wrap}
+.seeds{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.seed{background:var(--bg2);border:2px dashed var(--orange-soft);border-radius:999px;padding:8px 14px;font-size:16px;cursor:pointer;color:var(--orange-deep)}
+.seed:hover{background:var(--orange-soft)}
+
+.nav{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:30px}
+
+/* REVISÃO */
+.sum{background:#fff;border:3px solid var(--line);border-radius:22px;padding:6px 20px;margin-bottom:6px}
+.sum div{padding:14px 0;border-bottom:2px dashed var(--line)}
+.sum div:last-child{border:0}
+.sum small{display:block;font-size:15px;opacity:.7;margin-bottom:4px}
+.sum b{font-weight:400;font-size:24px;color:var(--orange);word-break:break-word}
+.err{color:#C0241A;font-size:18px;margin-top:14px;display:none}
+
+/* OBRIGADO */
+#done{display:none;text-align:center;flex:1;flex-direction:column;justify-content:center;animation:in .5s ease both}
+#done h2{font-size:clamp(40px,12vw,68px);font-weight:400;color:var(--orange);margin:6px 0 10px}
+#done p{font-size:21px;max-width:30ch;margin:0 auto 26px}
+.quote{background:var(--orange);color:#fff;border-radius:24px;padding:22px 24px;font-size:26px;margin:0 auto 28px;max-width:520px;transform:rotate(-1.2deg);word-break:break-word}
+.quote small{display:block;font-size:15px;opacity:.85;margin-top:10px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{overflow-x:hidden;position:relative}
+.wrap{position:relative;z-index:1;display:none}
+.wrap.on{display:flex}
+
+/* FUNDO DECORATIVO (15%) */
+.decor{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;color:var(--orange);opacity:.15}
+.decor svg{position:absolute;width:clamp(90px,24vmin,190px);height:auto;fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.decor .fillme{fill:currentColor;stroke:none}
+
+/* CAPA */
+#home{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:max(18px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom))}
+.cover{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.cover .ln{display:block;white-space:nowrap;line-height:.9;font-size:100px;text-align:center;font-weight:400;margin:0}
+.cover .ln.teens{color:var(--orange)}
+.cover .ln.t1{color:var(--orange-deep)}
+.cover .ln.t2{color:var(--orange)}
+.cover .logo{display:block}
+.cover .logo span{font-size:inherit}
+.cta{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding-top:14px}
+.cta p{font-size:20px}
+.cta .btn{font-size:26px;padding:18px 54px}
+.mini{font-size:20px;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-sun" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="34"/>
+      <g><line x1="100" y1="22" x2="100" y2="48"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(30 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(60 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(90 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(120 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(150 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(180 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(210 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(240 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(270 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(300 100 100)"/><line x1="100" y1="22" x2="100" y2="48" transform="rotate(330 100 100)"/></g>
+    </symbol>
+    <symbol id="i-smile" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="82"/>
+      <circle class="fillme" cx="70" cy="82" r="8"/><circle class="fillme" cx="130" cy="82" r="8"/>
+      <path d="M58 118 Q100 168 142 118"/>
+    </symbol>
+    <symbol id="i-bible" viewBox="0 0 160 200">
+      <rect x="22" y="10" width="116" height="180" rx="10"/>
+      <line x1="44" y1="10" x2="44" y2="190"/>
+      <path d="M91 44 V108 M68 70 H114"/>
+      <path d="M62 140 H122 M62 158 H108"/>
+    </symbol>
+    <symbol id="i-jesus" viewBox="0 0 200 250">
+      <ellipse cx="100" cy="34" rx="46" ry="12"/>
+      <ellipse cx="100" cy="86" rx="27" ry="35"/>
+      <path d="M73 78 C66 40 134 40 127 78"/>
+      <path d="M73 82 C58 110 60 148 70 168"/>
+      <path d="M127 82 C142 110 140 148 130 168"/>
+      <path d="M76 104 C78 144 122 144 124 104"/>
+      <path d="M88 80 H94 M106 80 H112"/>
+      <path d="M92 112 Q100 117 108 112"/>
+      <path d="M70 168 C40 182 28 214 24 248"/>
+      <path d="M130 168 C160 182 172 214 176 248"/>
+      <path d="M84 164 L100 204 L116 164"/>
+      <path d="M100 204 V248"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="decor" aria-hidden="true">
+  <svg style="top:3%;left:4%;transform:rotate(-10deg)"><use href="#i-sun"/></svg>
+  <svg style="top:6%;right:5%;transform:rotate(12deg)"><use href="#i-smile"/></svg>
+  <svg style="top:30%;left:-3%;transform:rotate(-14deg)"><use href="#i-bible"/></svg>
+  <svg style="top:34%;right:-2%;transform:rotate(8deg);width:clamp(110px,30vmin,230px)"><use href="#i-jesus"/></svg>
+  <svg style="top:58%;left:8%;transform:rotate(10deg)"><use href="#i-smile"/></svg>
+  <svg style="bottom:6%;right:10%;transform:rotate(-8deg)"><use href="#i-sun"/></svg>
+  <svg style="bottom:3%;left:-2%;transform:rotate(-6deg);width:clamp(110px,30vmin,230px)"><use href="#i-jesus"/></svg>
+  <svg style="bottom:26%;right:30%;transform:rotate(16deg);width:clamp(70px,18vmin,140px)"><use href="#i-bible"/></svg>
+</div>
+
+<section id="home">
+  <div class="cover">
+    <div class="ln teens logo" id="logo" aria-label="TEENS"><span>T</span><span>E</span><span>E</span><span>N</span><span>S</span></div>
+    <h1 style="margin:0;font-weight:400">
+      <span class="ln t1">Jantar</span>
+      <span class="ln t2">com pais</span>
+    </h1>
+  </div>
+  <div class="cta">
+    <p>Confirme sua presença em 1 minuto</p>
+    <button class="btn" id="start">Começar</button>
+  </div>
+</section>
+
+<main class="wrap" id="wrap">
+
+  <!-- FORMULÁRIO -->
+  <section id="flow">
+    <div class="top">
+      <div class="logo small" aria-label="TEENS"><span>T</span><span>E</span><span>E</span><span>N</span><span>S</span></div>
+      <div class="count" id="count">1 de 5</div>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="5"><i id="fill"></i></div>
+
+    <div class="step" data-step="0">
+      <h3>Qual é o seu nome?</h3>
+      <p class="hint">Como você gosta de ser chamado(a).</p>
+      <input class="field" id="nome" autocomplete="name" placeholder="Seu nome completo" maxlength="80">
+    </div>
+
+    <div class="step" data-step="1">
+      <h3>Qual é o seu estado civil?</h3>
+      <p class="hint">Toque em uma opção.</p>
+      <div class="chips" id="civil"></div>
+    </div>
+
+    <div class="step" data-step="2">
+      <h3>Quem são seus teens?</h3>
+      <p class="hint">Nome e idade de cada filho(a). Adicione quantos precisar.</p>
+      <div class="kidhead"><span>Nome</span><span>Idade</span><span></span></div>
+      <div class="kids" id="kids"></div>
+      <button class="btn ghost" id="addKid" type="button">+ Adicionar outro filho(a)</button>
+    </div>
+
+    <div class="step" data-step="3">
+      <h3>O que você sonha para seu filho daqui a 5 anos?</h3>
+      <p class="hint">Escreva do coração. Não existe resposta certa.</p>
+      <textarea class="field" id="sonho" maxlength="600" placeholder="Daqui a 5 anos, eu sonho que..."></textarea>
+      <div class="dreamtools"><span>Precisa de ajuda para começar?</span><span id="chars">0 / 600</span></div>
+      <div class="seeds" id="seeds"></div>
+    </div>
+
+    <div class="step" data-step="4">
+      <h3>Confirmo minha presença</h3>
+      <p class="hint">Toque em uma opção.</p>
+      <div class="chips" id="presenca"></div>
+    </div>
+
+    <div class="step" data-step="5">
+      <h3>Tudo certo?</h3>
+      <p class="hint">Confira antes de enviar.</p>
+      <div class="sum" id="sum"></div>
+      <p class="err" id="err">Não foi possível enviar. Verifique a internet e tente de novo.</p>
+    </div>
+
+    <div class="nav">
+      <button class="btn ghost" id="back" type="button">Voltar</button>
+      <button class="btn" id="next" type="button">Continuar</button>
+    </div>
+  </section>
+
+  <!-- OBRIGADO -->
+  <section id="done">
+    <div class="logo" aria-label="TEENS"><span>T</span><span>E</span><span>E</span><span>N</span><span>S</span></div>
+    <h2 id="thanks">Obrigado!</h2>
+    <p id="doneMsg"></p>
+    <div class="quote"><span id="quoteText"></span><small id="quoteBy"></small></div>
+    <div><button class="btn ghost" id="again" type="button">Enviar outra resposta</button></div>
+  </section>
+
+</main>
+
+<script>
+/* =====================================================
+   CONFIGURAÇÃO DO GOOGLE FORMS
+   Troque os valores abaixo pelos do SEU formulário.
+   FORM_ID: o trecho entre /d/e/ e /viewform no link público.
+   ENTRY: os códigos "entry.NNNN" de cada pergunta.
+   ===================================================== */
+const CONFIG = {
+  FORM_ID: "1FAIpQLSfg2DOl5Nsj0BkVynA-sStTpSCcIsHltYw2Xmr1_wfUIsyASg",
+  ENTRY: {
+    nome:   "entry.832329943",
+    civil:  "entry.1682333872",
+    filhos: "entry.37843923",
+    sonho:  "entry.1373335161",
+    presenca: "entry.1314313851"
+  }
+};
+const CONFIGURED = !CONFIG.FORM_ID.startsWith("COLE_") && true;
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const state = {step:0, civil:"", presenca:""};
+const LAST = 5;
+
+/* Logo interativa: cada letra pula ao toque */
+function bindLogo(el){
+  el.querySelectorAll("span").forEach((s,i)=>{
+    s.style.setProperty("--r", (i%2?7:-7)+"deg");
+    const hop=()=>{s.classList.add("pop");setTimeout(()=>s.classList.remove("pop"),350)};
+    s.addEventListener("pointerenter",hop);
+    s.addEventListener("click",hop);
+  });
+}
+bindLogo($("#logo"));
+/* Capa: escrita ocupa a tela toda */
+function fitCover(){
+  const home=$("#home");if(!home||home.style.display==="none")return;
+  const lines=$$("#home .ln");
+  const W=home.clientWidth-32;
+  lines.forEach(l=>{l.style.fontSize="100px";l.style.width="max-content"});
+  const fs=lines.map(l=>100*W/l.getBoundingClientRect().width);
+  const avail=window.innerHeight-$(".cta").offsetHeight-60;
+  let total=lines.reduce((a,l,i)=>a+fs[i]*.9,0);
+  const k=total>avail?avail/total:1;
+  lines.forEach((l,i)=>{l.style.fontSize=(fs[i]*k)+"px";l.style.width="auto"});
+}
+fitCover();
+window.addEventListener("resize",fitCover);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitCover);
+
+/* Entrada: as letras pulam em sequência uma vez */
+$$("#logo span").forEach((s,i)=>setTimeout(()=>{s.classList.add("pop");setTimeout(()=>s.classList.remove("pop"),350)},300+i*120));
+
+/* Estado civil */
+["Casado(a)","Solteiro(a)","União estável","Divorciado(a)","Viúvo(a)"].forEach(t=>{
+  const b=document.createElement("button");
+  b.type="button";b.className="chip";b.textContent=t;b.setAttribute("aria-pressed","false");
+  b.onclick=()=>{
+    $$("#civil .chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");state.civil=t;
+    setTimeout(()=>go(1),280);
+  };
+  $("#civil").appendChild(b);
+});
+
+/* Presença */
+["Sim","Não"].forEach(t=>{
+  const b=document.createElement("button");
+  b.type="button";b.className="chip";b.textContent=t;b.setAttribute("aria-pressed","false");
+  b.onclick=()=>{
+    $$("#presenca .chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");state.presenca=t;
+    setTimeout(()=>go(5),280);
+  };
+  $("#presenca").appendChild(b);
+});
+
+/* Filhos */
+function addKid(focus){
+  const row=document.createElement("div");row.className="kid";
+  row.innerHTML=`<input class="field k-name" placeholder="Nome" maxlength="60" aria-label="Nome do filho(a)">
+    <input class="field k-age" type="number" inputmode="numeric" min="1" max="30" placeholder="Idade" aria-label="Idade">
+    <button class="rm" type="button" aria-label="Remover">×</button>`;
+  row.querySelector(".rm").onclick=()=>{ if($$(".kid").length>1) row.remove(); };
+  $("#kids").appendChild(row);
+  if(focus) row.querySelector(".k-name").focus();
+}
+addKid(false);
+$("#addKid").onclick=()=>addKid(true);
+
+/* Sonho: contador e ideias */
+$("#sonho").addEventListener("input",e=>{$("#chars").textContent=e.target.value.length+" / 600"});
+["Que seja feliz","Que ame a Deus","Que tenha uma boa profissão","Que seja uma pessoa de caráter","Que tenha amigos de verdade"].forEach(t=>{
+  const b=document.createElement("button");b.type="button";b.className="seed";b.textContent="+ "+t;
+  b.onclick=()=>{
+    const ta=$("#sonho");
+    ta.value=(ta.value.trim()?ta.value.trim()+". ":"Daqui a 5 anos, eu sonho ")+t.toLowerCase().replace(/^que /,"que ");
+    ta.dispatchEvent(new Event("input"));ta.focus();
+  };
+  $("#seeds").appendChild(b);
+});
+
+/* Navegação */
+function kidsList(){
+  return $$(".kid").map(r=>({n:r.querySelector(".k-name").value.trim(),a:r.querySelector(".k-age").value.trim()}))
+    .filter(k=>k.n||k.a);
+}
+function kidsText(){return kidsList().map(k=>`${k.n}, ${k.a} anos`).join("; ")}
+
+function bad(el){el.classList.add("bad");el.focus();setTimeout(()=>el.classList.remove("bad"),500)}
+
+function valid(i){
+  if(i===0){const el=$("#nome");if(el.value.trim().length<2){bad(el);return false}}
+  if(i===1&&!state.civil){return false}
+  if(i===4&&!state.presenca){return false}
+  if(i===2){
+    const rows=$$(".kid");let ok=true;
+    rows.forEach(r=>{
+      const n=r.querySelector(".k-name"),a=r.querySelector(".k-age");
+      if(!n.value.trim()){bad(n);ok=false}
+      else if(!a.value||+a.value<1||+a.value>30){bad(a);ok=false}
+    });
+    return ok;
+  }
+  if(i===3){const el=$("#sonho");if(el.value.trim().length<3){bad(el);return false}}
+  return true;
+}
+
+function go(n){
+  if(n>state.step&&!valid(state.step))return;
+  state.step=n;
+  $$(".step").forEach(s=>s.classList.toggle("on",+s.dataset.step===n));
+  const shown=Math.min(n+1,5);
+  $("#count").textContent=n===LAST?"Revisão":`${shown} de 5`;
+  $("#fill").style.width=(n/LAST*100)+"%";
+  $("#back").style.visibility=n===0?"hidden":"visible";
+  $("#next").textContent=n===LAST?"Enviar":"Continuar";
+  $("#next").style.display=((n===1&&!state.civil)||(n===4&&!state.presenca))?"none":"";
+  if(n===LAST) renderSum();
+  window.scrollTo({top:0,behavior:"smooth"});
+  const f=document.querySelector(`.step[data-step="${n}"] .field`);
+  if(f&&n!==2)setTimeout(()=>f.focus({preventScroll:true}),350);
+}
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function renderSum(){
+  $("#sum").innerHTML=`
+    <div><small>Nome</small><b>${esc($("#nome").value.trim())}</b></div>
+    <div><small>Estado civil</small><b>${esc(state.civil)}</b></div>
+    <div><small>Filhos</small><b>${esc(kidsText())}</b></div>
+    <div><small>Sonho para daqui a 5 anos</small><b>${esc($("#sonho").value.trim())}</b></div>
+    <div><small>Confirmo minha presença</small><b>${esc(state.presenca)}</b></div>`;
+}
+
+$("#start").onclick=()=>{$("#home").style.display="none";$("#wrap").classList.add("on");$("#flow").style.display="flex";go(0)};
+$("#back").onclick=()=>go(state.step-1);
+$("#next").onclick=()=>state.step===LAST?send():go(state.step+1);
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey&&$("#flow").style.display==="flex"&&state.step===0){e.preventDefault();go(1)}
+});
+
+/* Envio para o Google Forms (as respostas caem na planilha vinculada) */
+async function send(){
+  const btn=$("#next");btn.disabled=true;btn.textContent="Enviando...";$("#err").style.display="none";
+  const data=new FormData();
+  data.append(CONFIG.ENTRY.nome,$("#nome").value.trim());
+  data.append(CONFIG.ENTRY.civil,state.civil);
+  data.append(CONFIG.ENTRY.filhos,kidsText());
+  data.append(CONFIG.ENTRY.sonho,$("#sonho").value.trim());
+  data.append(CONFIG.ENTRY.presenca,state.presenca);
+  try{
+    if(CONFIGURED){
+      await fetch(`https://docs.google.com/forms/d/e/${CONFIG.FORM_ID}/formResponse`,{method:"POST",mode:"no-cors",body:data});
+    }else{
+      console.warn("Formulário ainda não configurado. Modo de teste: nada foi enviado.",Object.fromEntries(data));
+      await new Promise(r=>setTimeout(r,600));
+    }
+    finish();
+  }catch(err){
+    $("#err").style.display="block";btn.disabled=false;btn.textContent="Enviar";
+  }
+}
+
+function finish(){
+  const first=$("#nome").value.trim().split(" ")[0];
+  $("#thanks").textContent=`Obrigado, ${first}!`;
+  $("#quoteText").textContent="“"+$("#sonho").value.trim()+"”";
+  $("#quoteBy").textContent="Seu sonho para daqui a 5 anos";
+  $("#doneMsg").textContent=state.presenca==="Sim"?"Sua presença está confirmada. Seu sonho já está com a gente.":"Registramos que você não poderá vir. Seu sonho já está com a gente.";
+  $("#flow").style.display="none";$("#done").style.display="flex";
+  bindLogo($("#done .logo"));
+  window.scrollTo({top:0});
+}
+
+$("#again").onclick=()=>{
+  $("#nome").value="";$("#sonho").value="";$("#chars").textContent="0 / 600";
+  state.civil="";state.presenca="";$$("#presenca .chip").forEach(c=>c.setAttribute("aria-pressed","false"));$$("#civil .chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+  $("#kids").innerHTML="";addKid(false);
+  $("#next").disabled=false;
+  $("#done").style.display="none";$("#wrap").classList.remove("on");$("#home").style.display="flex";fitCover();
+};
+</script>
+</body>
+</html>
